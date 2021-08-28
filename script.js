@@ -4,6 +4,11 @@ const apiMercadoLivre = async (computador) => {
   return produtosJson;
 };
 
+const atualizarLocalStorage = () => {
+  const carrinho = document.querySelector('.cart__items');
+  localStorage.setItem('productItem', carrinho.innerHTML);
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -30,6 +35,11 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function cartItemClickListener(event) {
+  event.target.remove(); 
+  atualizarLocalStorage();
+}
+
 const addProducts = (resultReash) => {
   const productElementItems = createProductItemElement({
     sku: resultReash.id,
@@ -42,10 +52,6 @@ const addProducts = (resultReash) => {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  event.target.remove(); 
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -67,6 +73,7 @@ function elementButton() {
       const object = { sku: apiJson.id, name: apiJson.title, salePrice: apiJson.price };
       const liProduct = createCartItemElement(object);
       cart.appendChild(liProduct);
+      atualizarLocalStorage();
       });
   });
 }

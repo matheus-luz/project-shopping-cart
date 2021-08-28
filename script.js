@@ -1,5 +1,5 @@
 const shoppingCart = '.cart__items';
-const price = document.querySelector('.total-price');
+const PRICE_ALL = document.querySelector('.total-price');
 
 // Requisito 7
 const carregando = () => {
@@ -55,7 +55,7 @@ function cartItemClickListener(event) {
   const h4 = document.querySelector('.total').innerText.split('$')[1];
   const h4Number = Number(h4);
   const sub = h4Number - numberRemove;
-  price.innerText = sub;
+  PRICE_ALL.innerText = sub;
   localStorage.setItem('valor', sub);
   event.target.remove(); 
   atualizarLocalStorage();
@@ -66,8 +66,7 @@ const excluirProdutos = () => {
   buttonExclui.addEventListener('click', () => {
     const carrinho = document.querySelector(shoppingCart);
     carrinho.innerHTML = '';
-    const h4 = document.querySelector('.total-price');
-    h4.innerText = 0;
+    PRICE_ALL.innerText = 0;
     localStorage.clear();
   });
 };
@@ -128,7 +127,7 @@ const salvarCarrinho = () => {
   const salveLocal = localStorage.getItem('productItem');
   const value = localStorage.getItem('valor');
   carrinho.innerHTML = salveLocal;
-  price.innerHTML = value;
+  PRICE_ALL.innerHTML = value;
 };
 
 const carrinho = document.querySelector(shoppingCart);

@@ -1,8 +1,17 @@
 const shoppingCart = '.cart__items';
 
+const carregando = () => {
+  const loading = document.createElement('h2');
+  loading.className = 'loading';
+  loading.innerText = 'loading...';
+  document.body.appendChild(loading);
+};
+
 const apiMercadoLivre = async (computador) => {
+  carregando();
   const apiProdutos = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${computador}`);
   const produtosJson = await apiProdutos.json(); 
+  document.querySelector('h2').remove();
   return produtosJson;
 };
 
@@ -100,7 +109,7 @@ const salvarCarrinho = () => {
 
 window.onload = async () => {
   await salvarCarrinho();
-  await apiMercadoLivre()
+  await apiMercadoLivre('computador')
   .then((jsonData) => {
     const resultSearch = jsonData.results;
     resultSearch.forEach((resultSearchs) => addProducts(resultSearchs));
